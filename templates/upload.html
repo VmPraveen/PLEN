@@ -1,0 +1,58 @@
+<!doctype html>
+<title>PLEN</title>
+<h2><pre>
+Welcome!
+A one stop to all your plant insight requirements!
+
+We can provide you insights on the following plant varieties.
+	1.Apple
+	2.Blueberry
+	3.Cherry
+	4.Grape
+	5.Orange
+	6.Peach
+	7.Pepper
+	8.Potato
+	9.Raspberry
+	10.Soyabean
+	11.Strawberry
+	12.Tomato
+
+Please upload a valid and clear image of leaves from one of the types given above.
+
+Disclaimer:
+-You will see an output of "Please provide a Clear and Valid Plant Image!"
+if you upload an unclear or an out of variety image. </pre></h2>
+<br>
+<strong>To get Insights on a plant, please upload an Image below!</strong>
+<br>
+<form method="post" action="/" enctype="multipart/form-data">
+    <dl>
+		<p>
+			<input type="file" name="file" autocomplete="off" required>
+		</p>
+    </dl>
+    <p>
+		<input type="submit" value="Submit">
+	</p>
+</form>
+<br>
+{% if filename %}
+	<strong>Derived Insights!</strong>
+	<p>
+		{% with messages = get_flashed_messages() %}
+		{% if messages %}
+			<ul>
+			{% for message in messages %}
+			<p>{{ message }}</p>
+			{% endfor %}
+			</ul>
+		{% endif %}
+		{% endwith %}
+	</p>
+	<div>
+		<img src="{{ url_for('display_image', filename=filename) }}">
+	</div>
+{% endif %}
+<br>
+<p> Thank You for visiting our website! </p>
