@@ -15,6 +15,8 @@ app.secret_key = "secret key"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
+for i in os.listdir('./static/uploads'):
+	os.remove('./static/uploads/' + i)
 
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 IMAGE_SHAPE = (224, 224)
@@ -69,9 +71,11 @@ def upload_image():
 					flash(str(i + 1) + '. ' + txt.strip()+'.')
 			else:
 				flash("Your Plant is coming out very well. Continue nourishing it to get greater yield from it!")
+			return render_template('upload.html', filename=filename)
 		else:
 			flash("Please provide a Clear and Valid Plant Image!")	
-		return render_template('upload.html', filename=filename)
+			return redirect(request.url)
+		
 	else:
 		flash('Allowed image types are -> png, jpg, jpeg')
 		return redirect(request.url)
