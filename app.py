@@ -15,8 +15,6 @@ app.secret_key = "secret key"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
-for i in os.listdir('./static/uploads'):
-	os.remove('./static/uploads/' + i)
 
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 IMAGE_SHAPE = (224, 224)
@@ -42,7 +40,10 @@ def load_image(filename):
 
 @app.route('/')
 def upload_form():
-	return render_template('upload.html')
+	for i in os.listdir('./static/uploads'):
+		if i != 'sample.JPG':
+			os.remove('./static/uploads/' + i)
+	return render_template('upload.html', filename='')
 
 @app.route('/', methods=['POST'])
 def upload_image():
@@ -56,7 +57,6 @@ def upload_image():
 	if file and allowed_file(file.filename):
 		filename = secure_filename(file.filename)
 		file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-		print('upload_image filename: ' + filename)
 		image = load_image(filename)
 		id, prediction = predict_reload(image)
 		if list(prediction.values())[0] > 0.60:
@@ -72,16 +72,14 @@ def upload_image():
 			else:
 				flash("Your Plant is coming out very well. Continue nourishing it to get greater yield from it!")
 		else:
-			flash("Please provide a Clear and Valid Plant Image!")	
+			flash("Please provide a Clear and Valid Plant Leaf Image as shown in the example above!")	
 		return render_template('upload.html', filename=filename)
-		
 	else:
 		flash('Allowed image types are -> png, jpg, jpeg')
 		return redirect(request.url)
 
 @app.route('/display/<filename>')
 def display_image(filename):
-	#print('display_image filename: ' + filename)
 	return redirect(url_for('static', filename='uploads/' + filename), code=301)
 
 if __name__ == "__main__":
