@@ -71,10 +71,9 @@ def upload_image():
 					flash(str(i + 1) + '. ' + txt.strip()+'.')
 			else:
 				flash("Your Plant is coming out very well. Continue nourishing it to get greater yield from it!")
-			return render_template('upload.html', filename=filename)
 		else:
 			flash("Please provide a Clear and Valid Plant Image!")	
-			return redirect(request.url)
+		return render_template('upload.html', filename=filename)
 		
 	else:
 		flash('Allowed image types are -> png, jpg, jpeg')
