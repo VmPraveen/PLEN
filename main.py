@@ -1,18 +1,16 @@
 import os
+from app import app
 import urllib.request
 from flask import Flask, flash, request, redirect, url_for, render_template
 from werkzeug.utils import secure_filename
 import tensorflow as tf
 import tensorflow_hub as hub
-import cv2
+from tensorflow.keras.preprocessing import image
 import numpy as np
+import PIL
 
-UPLOAD_FOLDER = 'static/uploads/'
-
-app = Flask(__name__)
-app.secret_key = "secret key"
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+for i in os.listdir('./static/uploads'):
+	os.remove('./static/uploads/' + i)
 
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 IMAGE_SHAPE = (224, 224)
@@ -31,9 +29,8 @@ def predict_reload(image):
     return class_idx, {classes[class_idx]: probabilities[class_idx]}
 
 def load_image(filename):
-    img = cv2.imread(f'./static/uploads/{filename}')
-    img = cv2.resize(img, (IMAGE_SHAPE[0], IMAGE_SHAPE[1]))
-    img = img /255
+    img = image.img_to_array(image.load_img("./static/uploads/" + filename, target_size=(IMAGE_SHAPE[0], IMAGE_SHAPE[1])))
+    img = img / 255.
     return img
 
 
@@ -59,7 +56,7 @@ def upload_image():
 		if list(prediction.values())[0] > 0.60:
 			label = list(prediction.keys())[0]
 			if causes[id]:
-				flash(f'The plant is affected with "{label}".')
+				flash('The plant is affected with' + ' "' + label + '"' + '.')
 				flash("Causes of this condition:")
 				for i, txt in enumerate(causes[id].strip().split(',')):
 					flash(str(i + 1) + '. ' + txt.strip()+'.')	
