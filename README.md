@@ -1,6 +1,6 @@
-#PLant ENhancer
+# PLant ENhancer
 
-This app can provide you insights on the following plant varieties.
+<pre>This app can provide you insights on the following plant varieties.
 	1.Apple
 	2.Blueberry
 	3.Cherry
@@ -13,7 +13,7 @@ This app can provide you insights on the following plant varieties.
 	10.Soyabean
 	11.Strawberry
 	12.Tomato
-  
+  </pre>
   Insights include disease detected, causes for it and how to treat it.
   
   It is deployed at https://plen.herokuapp.com/
