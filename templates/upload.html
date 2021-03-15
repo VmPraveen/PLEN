@@ -1,7 +1,7 @@
 <!doctype html>
 <title>PLEN</title>
 <h2><pre>
-Welcome!
+<h1>Welcome to PLant ENhancer!</h1>
 A one stop to all your plant insight requirements!
 
 We can provide you insights on the following plant varieties.
@@ -18,14 +18,18 @@ We can provide you insights on the following plant varieties.
 	11.Strawberry
 	12.Tomato
 
-Please upload a valid and clear image of leaves from one of the types given above.
+Please upload a valid and clear image of leaves from one of the types given above as given in the below example.
 
 Disclaimer:
--You will see an output of "Please provide a Clear and Valid Plant Image!"
-if you upload an unclear or an out of variety image. </pre></h2>
+-You will see an output of "Please provide a Clear and Valid Plant Image!", if you upload an unclear or an out of variety image. 
+</pre></h2>
+<h1><strong>Example Image!</strong></h1>
 <br>
-<strong>To get Insights on a plant, please upload an Image below!</strong>
+<div>
+	<img src="{{ url_for('display_image', filename='sample.JPG') }}">
+</div>
 <br>
+<h1><strong>To get Insights on a plant, please upload an Image below!</strong></h1>
 <form method="post" action="/" enctype="multipart/form-data">
     <dl>
 		<p>
@@ -38,7 +42,7 @@ if you upload an unclear or an out of variety image. </pre></h2>
 </form>
 <br>
 {% if filename %}
-	<strong>Derived Insights!</strong>
+	<h1><strong>Derived Insights!</strong></h1>
 	<p>
 		{% with messages = get_flashed_messages() %}
 		{% if messages %}
@@ -55,4 +59,10 @@ if you upload an unclear or an out of variety image. </pre></h2>
 	</div>
 {% endif %}
 <br>
-<p> Thank You for visiting our website! </p>
+<strong>Thank You Note!</strong>
+<pre>
+We will be constantly updating this website.
+In case of any inconvenience caused, we regret for that.
+We are destined to make this website really useful to our farmers!
+Please contact at <a href="mailto:karthikayanmailsamy@gmail.com">karthikayanmailsamy@gmail.com</a> for any queries or suggestions on improving this website!
+Thank You for supporting us by visiting our website!</pre>
